@@ -1606,6 +1606,8 @@
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
   (( ! $+functions[p10k] )) || p10k reload
+
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 }
 
 # Tell `p10k configure` which file it should overwrite.

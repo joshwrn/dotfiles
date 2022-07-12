@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+set -e
+
+skip_system_packages="${1}"
+
+os_type="$(uname -s)"
+
+apt_packages="curl git python3-pip zsh fzf neovim"
+apt_packages_optional=""
+
+brew_packages="git python zsh fzf neovim"
+brew_packages_optional=""
+
+###############################################################################
+# Detect OS and distro type
+###############################################################################
+
+function no_system_packages() {
+cat << EOF
+System package installation isn't supported with your OS / distro.
+Please install any dependent packages on your own. You can view the list at:
+    https://github.com/nickjj/dotfiles/blob/master/install
+Then re-run the script and explicitly skip installing system packages:
+    bash <(curl -sS https://raw.githubusercontent.com/nickjj/dotfiles/master/install) --skip-system-packages
+EOF
+
+exit 1
+}
+
+case "${os_type}" in
+    Linux*)
+        os_type="Linux"
+
+        if [ !  -f "/etc/debian_version" ]; then
+           [ -z "${skip_system_packages}" ] && no_system_packages
+        fi
+
+        ;;
+    Darwin*) os_type="macOS";;
+    *)
+        os_type="Other"
+
+        [ -z "${skip_system_packages}" ] && no_system_packages
+
+        ;;
+esac
+
+###############################################################################
+# Install packages using your OS' package manager
+###############################################################################
+
+function apt_install_packages {
+    # shellcheck disable=SC2086
+    sudo apt-get update && sudo apt-get install -y ${apt_packages} ${apt_packages_optional}
+}
+
+function brew_install_self {
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
+function brew_install_packages {
+    [ -x "$(command -v brew > /dev/null 2>&1)" ] && brew_install_self
+
+    # shellcheck disable=SC2086
+    brew install ${brew_packages} ${brew_packages_optional}
+}
+
+function display_packages {
+    if [ "${os_type}" == "Linux" ]; then
+        echo "${apt_packages} ${apt_packages_optional}"
+    else
+        echo "${brew_packages} ${brew_packages_optional}"
+    fi
+}
+
+function install_oh_my_zsh {
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+}
+
+###############################################################################
+# Install zsh plugins
+###############################################################################
+
+"git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+
+
+###############################################################################
+# Change default shell to zsh
+###############################################################################
+
+[ "${os_type}" != "macOS" ] && chsh -s "$(command -v zsh)"
+
+# shellcheck disable=SC1090
+. "${HOME}/.config/zsh/.zprofile"
+
+###############################################################################
+# Done!
+###############################################################################
+
+cat << EOF
+Everything was installed successfully!
+Check out the README file on GitHub to do 1 quick thing manually:
+https://github.com/nickjj/dotfiles#did-you-install-everything-successfully
+You can safely close this terminal.
+The next time you open your terminal zsh will be ready to go!
+EOF
+
+exit 0

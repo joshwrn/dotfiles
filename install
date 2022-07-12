@@ -19,10 +19,7 @@ brew_packages_optional=""
 function no_system_packages() {
 cat << EOF
 System package installation isn't supported with your OS / distro.
-Please install any dependent packages on your own. You can view the list at:
-    https://github.com/nickjj/dotfiles/blob/master/install
-Then re-run the script and explicitly skip installing system packages:
-    bash <(curl -sS https://raw.githubusercontent.com/nickjj/dotfiles/master/install) --skip-system-packages
+Please install any dependent packages on your own.
 EOF
 
 exit 1
@@ -100,8 +97,6 @@ function install_oh_my_zsh {
 
 cat << EOF
 Everything was installed successfully!
-Check out the README file on GitHub to do 1 quick thing manually:
-https://github.com/nickjj/dotfiles#did-you-install-everything-successfully
 You can safely close this terminal.
 The next time you open your terminal zsh will be ready to go!
 EOF

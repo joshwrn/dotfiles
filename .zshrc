@@ -122,10 +122,16 @@ source $ZSH/oh-my-zsh.sh
 # chpwd() ls -a
 
 export FZF_DEFAULT_OPTS='
-  --color=bg+:#24283b,bg:#1a1b26,spinner:#a9b1d6,hl:#bb9af7
+  --color=bg+:-1,bg:-1,spinner:#a9b1d6,hl:#bb9af7
   --color=fg:#565f89,header:#7aa2f7,info:#7aa2f7,pointer:#a9b1d6
   --color=marker:#a9b1d6,fg+:#a9b1d6,prompt:#a9b1d6,hl+:#a9b1d6
-'
+   '
+
+# export FZF_DEFAULT_OPTS='
+#   --color=bg+:#24283b,bg:#1a1b26,spinner:#a9b1d6,hl:#bb9af7
+#   --color=fg:#565f89,header:#7aa2f7,info:#7aa2f7,pointer:#a9b1d6
+#   --color=marker:#a9b1d6,fg+:#a9b1d6,prompt:#a9b1d6,hl+:#a9b1d6
+# '
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

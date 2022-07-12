@@ -2,15 +2,11 @@
 
 set -e
 
-skip_system_packages="${1}"
-
 os_type="$(uname -s)"
 
 apt_packages="curl git python3-pip zsh fzf neovim"
-apt_packages_optional=""
 
 brew_packages="git python zsh fzf neovim"
-brew_packages_optional=""
 
 ###############################################################################
 # Detect OS and distro type
@@ -30,7 +26,7 @@ case "${os_type}" in
         os_type="Linux"
 
         if [ !  -f "/etc/debian_version" ]; then
-           [ -z "${skip_system_packages}" ] && no_system_packages
+            no_system_packages
         fi
 
         ;;
@@ -38,7 +34,7 @@ case "${os_type}" in
     *)
         os_type="Other"
 
-        [ -z "${skip_system_packages}" ] && no_system_packages
+        no_system_packages
 
         ;;
 esac
@@ -49,7 +45,7 @@ esac
 
 function apt_install_packages {
     # shellcheck disable=SC2086
-    sudo apt-get update && sudo apt-get install -y ${apt_packages} ${apt_packages_optional}
+    sudo apt-get update && sudo apt-get install -y ${apt_packages}
 }
 
 function brew_install_self {
@@ -60,14 +56,14 @@ function brew_install_packages {
     [ -x "$(command -v brew > /dev/null 2>&1)" ] && brew_install_self
 
     # shellcheck disable=SC2086
-    brew install ${brew_packages} ${brew_packages_optional}
+    brew install ${brew_packages}
 }
 
 function display_packages {
     if [ "${os_type}" == "Linux" ]; then
-        echo "${apt_packages} ${apt_packages_optional}"
+        echo "${apt_packages}"
     else
-        echo "${brew_packages} ${brew_packages_optional}"
+        echo "${brew_packages}"
     fi
 }
 
@@ -172,12 +168,9 @@ if grep -qE "(Microsoft|microsoft|WSL)" /proc/version &>/dev/null; then
     sudo ln -fs "${clone_path}/etc/wsl.conf" /etc/wsl.conf
 fi
 
-
 ###############################################################################
 # Done!
 ###############################################################################
-
-
 
 cat << EOF
 Everything was installed successfully!

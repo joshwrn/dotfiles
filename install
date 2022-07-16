@@ -66,6 +66,10 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k || true
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting || true
 
+# install vim plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
 # Clone dotfiles
 echo -e "${BPurple}copying dotfiles ⚡${Color_Off}"
 clone_path="${clone_path:-"${HOME}/dotfiles"}"
@@ -85,6 +89,7 @@ echo -e "${BPurple}Checking if user is on codespaces 🔎${Color_Off}"
 
 if [ "$USER" == "vscode"]; then
     echo -e "${BPurple}Updating yarn dir in .zshrc ✍️${Color_Off}"
+fi
 
 
     if [ "$USER" == "vscode" ]; then

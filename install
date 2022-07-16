@@ -5,7 +5,7 @@ Color_Off='\033[0m'
 set -e
 
 os_type="$(uname -s)"
-user="$USER"
+user=$USER
 apt_packages="curl git python3-pip zsh fzf neovim"
 brew_packages="git python zsh fzf neovim"
 

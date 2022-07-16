@@ -71,7 +71,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # Clone dotfiles
-echo -e "${BPurple}copying dotfiles ⚡${Color_Off}"
+echo -e "${BPurple}copying dotfiles 💎${Color_Off}"
 clone_path="${clone_path:-"${HOME}/dotfiles"}"
 
 # This is used to locally develop the install script.
@@ -88,7 +88,7 @@ rsync -a "${clone_path}/." "${HOME}"
 echo -e "${BPurple}Checking if user is on codespaces 🔎${Color_Off}"
 
 if [ "$USER" == "vscode" ]; then
-    echo -e "${BPurple}Updating yarn dir in .zshrc ✍️${Color_Off}"
+    echo -e "${BPurple}Updating yarn dir in .zshrc 🧶${Color_Off}"
 fi
 
 
@@ -96,7 +96,7 @@ fi
         cat << EOF >> ${HOME}/.zshrc
 DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
-export PATH="/usr/local/go/bin:/usr/local/lib/nodejs/bin:/usr/local/lib/nodejs/node_modules/.bin:$HOME/bin:$PATH"
+export PATH="/usr/local/go/bin:/usr/local/lib/nodejs/bin:/usr/local/lib/nodejs/node_modules/.bin:\$HOME/bin:\$PATH"
 source /usr/local/nnn.quitcd.bash_zsh
 export NNN_OPTS=deoaAHR
 EOF

@@ -140,9 +140,5 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-DISABLE_AUTO_UPDATE=true
-DISABLE_UPDATE_PROMPT=true
-export PATH="/usr/local/go/bin:/usr/local/lib/nodejs/bin:/usr/local/lib/nodejs/node_modules/.bin:$HOME/bin:$PATH"
-source /usr/local/nnn.quitcd.bash_zsh
-export NNN_OPTS=deoaAHR
+
 

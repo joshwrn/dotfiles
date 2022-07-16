@@ -5,11 +5,11 @@ Color_Off='\033[0m'
 set -e
 
 os_type="$(uname -s)"
+user="$(USER)"
 apt_packages="curl git python3-pip zsh fzf neovim"
 brew_packages="git python zsh fzf neovim"
 
 # Detect OS and distro type
-
 case "${os_type}" in
     Linux*)
         os_type="Linux"
@@ -29,7 +29,6 @@ case "${os_type}" in
 esac
 
 # Install packages using your OS' package manager
-
 function apt_install_packages {
     # shellcheck disable=SC2086
     sudo apt-get update && sudo apt-get install -y ${apt_packages}
@@ -38,7 +37,6 @@ function apt_install_packages {
 function brew_install_self {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
-
 function brew_install_packages {
     [ -x "$(command -v brew > /dev/null 2>&1)" ] && brew_install_self
 
@@ -66,15 +64,11 @@ fi
 echo -e "${BPurple}Installing theme 💫${Color_Off}"
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
-
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k || true
-
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting || true
 
 # Clone dotfiles
-
 echo -e "${BPurple}copying dotfiles ⚡${Color_Off}"
-
 clone_path="${clone_path:-"${HOME}/dotfiles"}"
 
 # This is used to locally develop the install script.
@@ -84,12 +78,23 @@ else
     git clone https://github.com/joshwrn/dotfiles "${clone_path}"
 fi
 
-cp -a "${clone_path}/." "${HOME}"
-
+rsync -a "${clone_path}/." "${HOME}"
 rm -rf .git
 
+# if on codespaces add yarn config to zsh
+
+echo -e "${BPurple}Checking if user is on codespaces${Color_Off}"
+    if [ "${user}" == "vscode" ]; then
+        cat << EOF >> ${HOME}/.zshrc
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
+export PATH="/usr/local/go/bin:/usr/local/lib/nodejs/bin:/usr/local/lib/nodejs/node_modules/.bin:$HOME/bin:$PATH"
+source /usr/local/nnn.quitcd.bash_zsh
+export NNN_OPTS=deoaAHR
+EOF
+    fi
+
+
 # Done!
-
 echo -e "${BPurple}Success! Restart terminal to get started. 🚀${Color_Off}"
-
 exit 0

@@ -12,15 +12,6 @@ brew_packages="git python zsh fzf neovim"
 # Detect OS and distro type
 ###############################################################################
 
-function no_system_packages() {
-cat << EOF
-System package installation isn't supported with your OS / distro.
-Please install any dependent packages on your own.
-EOF
-
-exit 1
-}
-
 case "${os_type}" in
     Linux*)
         os_type="Linux"
@@ -68,29 +59,23 @@ function display_packages {
 }
 
 cat << EOF
-Do you want to install the following packages:
+Installing packages 📦
 $(display_packages)
 EOF
-    while true; do
-        read -rp "Do you want to install the above packages? (y/n) " yn
-        case "${yn}" in
-            [Yy]*)
-                if [ "${os_type}" == "Linux" ]; then
-                    apt_install_packages
-                else
-                    brew_install_packages
-                fi
 
-                break;;
-            [Nn]*) exit 0;;
-            *) echo "Please answer y or n";;
-        esac
-    done
-
+if [ "${os_type}" == "Linux" ]; then
+    apt_install_packages
+else
+    brew_install_packages
+fi
 
 function install_oh_my_zsh {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
 }
+
+cat << EOF
+Installing theme 💫
+EOF
 
 install_oh_my_zsh
 
@@ -102,21 +87,11 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # Clone dotfiles
 ###############################################################################
 
-read -rep $'\nWhere do you want to clone these dotfiles to [~/dotfiles]? ' clone_path
+cat << EOF
+copying dotfiles 🧑‍💻
+EOF
+
 clone_path="${clone_path:-"${HOME}/dotfiles"}"
-
-# Ensure path doesn't exist.
-while [ -e "${clone_path}" ]; do
-    read -rep $'\nPath exists, try again? (y) ' y
-    case "${y}" in
-        [Yy]*)
-
-            break;;
-        *) echo "Please answer y or CTRL+c the script to abort everything";;
-    esac
-done
-
-echo
 
 # This is used to locally develop the install script.
 if [ "${DEBUG}" == "1" ]; then
@@ -125,57 +100,16 @@ else
     git clone https://github.com/joshwrn/dotfiles "${clone_path}"
 fi
 
-###############################################################################
-# Create initial directories
-###############################################################################
+rsync -a "${clone_path}/." "${HOME}"
 
-mkdir -p "${HOME}/.config/zsh" "${HOME}/.config/nvim"
-
-cat << EOF
--------------------------------------------------------------------------------
-files will be linked from "${clone_path}" to "${HOME}"
-# And if you happen to be using WSL:
-sudo ln -fs "${clone_path}/etc/wsl.conf" /etc/wsl.conf
--------------------------------------------------------------------------------
-A potentially dangerous action is about to happen. The above files are going to
-get forcefully symlinked.
-What does that mean?
-Any config files you have on the right hand side of the paths are going to get
-overwritten with the files that come with my dotfiles (left side).
-If you care about your original config files now would be the time to back
-them up. They will ALL be overwritten if you say yes to the prompt below.
-EOF
-
-while true; do
-  read -rep $'\nReady to continue and apply the symlinks? (y) ' y
-  case "${y}" in
-      [Yy]*)
-
-          break;;
-      *) echo "Please answer y or CTRL+c the script to abort everything";;
-  esac
-done
-
-ln -fs "${clone_path}/.zshenv" "${HOME}/.zshenv" \
-    && ln -fs "${clone_path}/.zshrc" "${HOME}/.zshrc" \
-    && ln -fs "${clone_path}/.p10k.zsh" "${HOME}/.p10k.zsh" \
-    && ln -fs "${clone_path}/.bashrc" "${HOME}/.bashrc" \
-    && ln -fs "${clone_path}/.fzf.zsh" "${HOME}/.fzf.zsh" \
-    && ln -fs "${clone_path}/.fzf" "${HOME}" \
-    && ln -fs "${clone_path}/.config/nvim/init.vim" "${HOME}/.config/nvim/init.vim" \
-
-if grep -qE "(Microsoft|microsoft|WSL)" /proc/version &>/dev/null; then
-    sudo ln -fs "${clone_path}/etc/wsl.conf" /etc/wsl.conf
-fi
+rm -rf .git
 
 ###############################################################################
 # Done!
 ###############################################################################
 
 cat << EOF
-Everything was installed successfully!
-You can safely close this terminal.
-The next time you open your terminal zsh will be ready to go!
+Success! Restart terminal to get started. 🚀
 EOF
 
 exit 0

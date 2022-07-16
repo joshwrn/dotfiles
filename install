@@ -87,7 +87,7 @@ rsync -a "${clone_path}/." "${HOME}"
 
 echo -e "${BPurple}Checking if user is on codespaces 🔎${Color_Off}"
 
-if [ "$USER" == "vscode"]; then
+if [ "$USER" == "vscode" ]; then
     echo -e "${BPurple}Updating yarn dir in .zshrc ✍️${Color_Off}"
 fi
 

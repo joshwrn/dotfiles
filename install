@@ -78,7 +78,6 @@ else
 fi
 
 rsync -a "${clone_path}/." "${HOME}"
-rm -rf .git
 
 # if on codespaces add yarn config to zsh
 

@@ -85,7 +85,7 @@ rm -rf .git
 echo -e "${BPurple}Checking if user is on codespaces 🔎${Color_Off}"
 
 if [ "$USER" == "vscode"]; then
-    echo -e "${BPurple}Updating yarn dir in .zshrc✍️${Color_Off}"
+    echo -e "${BPurple}Updating yarn dir in .zshrc ✍️${Color_Off}"
 
 
     if [ "$USER" == "vscode" ]; then

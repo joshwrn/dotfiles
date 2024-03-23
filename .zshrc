@@ -77,6 +77,10 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+alias g="git"
+alias y="yarn"
+alias yd="yarn dev"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"

@@ -1,0 +1,10 @@
+[alias]
+	ch = checkout
+	aa = add -A
+	p = push
+	pf = push --force
+	chb = checkout -b
+	a = add
+	cm = commit -m
+	pl = pull
+	rb = rebase

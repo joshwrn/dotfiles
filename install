@@ -24,25 +24,6 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
  zsh
 EOF
 
-cat << EOF >> "${HOME}"/.zshrc
-alias g="git"
-alias y="yarn"
-alias yd="yarn dev"
-EOF
-
-cat << EOF >> "${HOME}"/.gitconfig
-[alias]
-	ch = checkout
-	aa = add -A
-	p = push
-	pf = push --force
-	chb = checkout -b
-	a = add
-	cm = commit -m
-	pl = pull
-	rb = rebase
-EOF
-
 # Done!
 echo -e "${BPurple}Success! Restart terminal to get started. 🚀${Color_Off}"
 exit 0

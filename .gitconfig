@@ -3,6 +3,7 @@
 	aa = add -A
 	p = push
 	pf = push --force
+  po = push origin
 	chb = checkout -b
 	a = add
 	cm = commit -m

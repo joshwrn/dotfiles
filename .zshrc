@@ -80,6 +80,7 @@ source $ZSH/oh-my-zsh.sh
 alias g="git"
 alias y="yarn"
 alias yd="yarn dev"
+alias tks="tmux kill-server"
 
 # User configuration
 

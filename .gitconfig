@@ -9,3 +9,4 @@
 	cm = commit -m
 	pl = pull
 	rb = rebase
+	recent = "branch --sort=-committerdate"

@@ -3,7 +3,7 @@
 	aa = add -A
 	p = push
 	pf = push --force
-	po = push --set-upstream origin
+	po =  "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
 	chb = checkout -b
 	a = add
 	cm = commit -m

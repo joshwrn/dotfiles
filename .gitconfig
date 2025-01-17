@@ -15,6 +15,6 @@
 	pl = pull
 	rb = rebase
 	rbc = rebase --continue
-	recent = !git switch $(git branch --sort=-committerdate | fzf | sed "s/^..//")
 	rlc = "reset HEAD^"
+	sr = !git switch $(git branch --sort=-committerdate | fzf | sed "s/^..//")
 	st = "status -s"

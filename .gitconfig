@@ -10,5 +10,6 @@
 	pl = pull
 	fpl = "!f() { git fetch origin $1:$1; }; f"
 	rb = rebase
+	rbc = rebase --continue
 	lb='switch -'
 	recent = "branch --sort=-committerdate"

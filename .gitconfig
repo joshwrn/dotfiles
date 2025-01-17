@@ -1,16 +1,20 @@
 [alias]
-	ch = checkout
+	a = add
 	aa = add -A
+	aliases = "!git config -l | grep alias | cut -c 7-"
+	ch = checkout
+	chb = checkout -b
+	cm = commit -m
+	pick = cherry-pick
+	amend = "commit --amend --no-edit"
+	fpl = "!f() { git fetch origin $1:$1; }; f"
+	lb="switch -"
 	p = push
 	pf = push --force
 	po =  "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
-	chb = checkout -b
-	a = add
-	cm = commit -m
 	pl = pull
-	fpl = "!f() { git fetch origin $1:$1; }; f"
 	rb = rebase
 	rbc = rebase --continue
-	lb = "switch -"
-	st= "status -s"
 	recent = "branch --sort=-committerdate"
+	rlc = "reset HEAD^"
+	st = "status -s"

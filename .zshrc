@@ -1,20 +1,28 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+
 
 # Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME="codespaces"
+# Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
@@ -73,29 +81,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
-alias g="git"
-alias y="yarn"
-alias yd="yarn dev"
-alias n="npm"
-alias nl="npm i --legacy-peer-deps"
-alias ni="npm i"
-alias nd="npm i --save-dev"
-alias ndl="npm i --save-dev --legacy-peer-deps"
-alias bd="bun run dev"
-alias bi="bun i"
-alias bid="bun i --save-dev"
-alias br="bun run"
-alias b="bun"
-alias bt="bun test"
-alias btw="bun test --watch"
-alias cdmui="cd $(git rev-parse --show-toplevel)/src/renderer/src/ui"
-alias tks="tmux kill-server"
-
 # User configuration
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -120,22 +111,69 @@ alias tks="tmux kill-server"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-DISABLE_AUTO_UPDATE=true
-DISABLE_UPDATE_PROMPT=true
-export PATH="/usr/local/go/bin:/usr/local/lib/nodejs/bin:/usr/local/lib/nodejs/node_modules/.bin:$HOME/bin:$PATH"
-source /usr/local/nnn.quitcd.bash_zsh
-export NNN_OPTS=deoaAHR
-eval "$(direnv hook zsh)"
 
- export FZF_DEFAULT_OPTS='
+export FZF_DEFAULT_OPTS='
   --color=bg+:-1,bg:-1,spinner:#a9b1d6,hl:#bb9af7
-  --color=fg:#565f89,header:#7aa2f7,info:#7aa2f7,pointer:#a9b1d6
-  --color=marker:#a9b1d6,fg+:#a9b1d6,prompt:#a9b1d6,hl+:#a9b1d6
+      --color=fg:#565f89,header:#7aa2f7,info:#7aa2f7,pointer:#a9b1d6
+     --color=marker:#a9b1d6,fg+:#a9b1d6,prompt:#a9b1d6,hl+:#a9b1d6
    '
 
- # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#    export FZF_DEFAULT_OPTS='
+#  --color=fg:-1,bg:-1,hl:#5f87af
+#  --color=fg+:#d0d0d0,bg+:-1,hl+:#5fd7ff
+#  --color=info:#afaf87,prompt:#d7005f,pointer:#af5fff
+#  --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-clide() { TERM=screen command clide "$@"; }
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias g="git"
+alias y="yarn"
+alias yd="yarn dev"
+alias n="npm"
+alias nl="npm i --legacy-peer-deps"
+alias ni="npm i"
+alias nd="npm i --save-dev"
+alias ndl="npm i --save-dev --legacy-peer-deps"
+alias lg="lazygit"
+alias lgb="lazygit branch"
+alias lgs="lazygit status"
+alias lgl="lazygit log"
+alias lga="lazygit stash"
+alias bd="bun run dev"
+alias bi="bun i"
+alias bid="bun i --dev"
+alias br="bun run"
+alias b="bun"
+alias bt="bun test"
+alias btw="bun test --watch"
+
+alias c="clear"
+
+alias cdmui="cd $(git rev-parse --show-toplevel)/src/renderer/src/ui"
+
+export PATH="/usr/local/opt/python@3.12/bin:$PATH"
+
+
+[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
+
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/josh/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/josh/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/josh/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/josh/google-cloud-sdk/completion.zsh.inc'; fi
+
+# bun completions
+[ -s "/Users/josh/.bun/_bun" ] && source "/Users/josh/.bun/_bun"
+
+eval "$(starship init zsh)"
